@@ -22,10 +22,12 @@ my_posts = [{"title":"Title of post 1", "content":"Content of post 1", "id":1},
 def root():
     return {"message": "Welcome to akash's api"}
 
+#This is get function
 @app.get("/posts_data")
 def get_posts():
     return {"data":my_posts}
 
+#This is post function
 @app.post("/posts")
 def create_posts(new_post: Post):
     post_dict = new_post.dict()
