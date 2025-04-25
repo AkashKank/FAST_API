@@ -36,6 +36,7 @@ def create_posts(new_post: Post):
     my_posts.append(post_dict)
     return {"data":post_dict}
 
+#This is demo post function
 @app.post("/demo_post")
 def demopost(new_post: Post):
     post_dict = new_post.dict()
