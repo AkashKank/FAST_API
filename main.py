@@ -16,7 +16,8 @@ class Post(BaseModel):
 my_posts = [{"title":"Title of post 1", "content":"Content of post 1", "id":1}, 
             {"title":"Favourite foods", "content":"I like Pizza", "id":2},
             {"title":"Favourite Sport", "content":"I like WWE Wrestlemenia", "id":3}, 
-            {"title":"Favourite Place", "content":"Dadar Siddhivinayak Ganpati bappa", "id":4}]
+            {"title":"Favourite Place", "content":"Dadar Siddhivinayak Ganpati bappa", "id":4},
+            {"title":"Favourite Person", "content":"Steve jobs", "id":5}]
 
 @app.get("/")
 def root():
@@ -32,6 +33,13 @@ def get_posts():
 def create_posts(new_post: Post):
     post_dict = new_post.dict()
     post_dict['id'] = randrange(0, 1000000)
+    my_posts.append(post_dict)
+    return {"data":post_dict}
+
+@app.post("/demo_post")
+def demopost(new_post: Post):
+    post_dict = new_post.dict()
+    post_dict['id'] = randrange(0, 10000)
     my_posts.append(post_dict)
     return {"data":post_dict}
 
