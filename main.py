@@ -1,7 +1,7 @@
 
 from random import randrange
 from typing import Optional
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException, Response, status
 from fastapi import Body
 from pydantic import BaseModel
 
@@ -18,6 +18,11 @@ my_posts = [{"title":"Title of post 1", "content":"Content of post 1", "id":1},
             {"title":"Favourite Sport", "content":"I like WWE Wrestlemenia", "id":3}, 
             {"title":"Favourite Place", "content":"Dadar Siddhivinayak Ganpati bappa", "id":4},
             {"title":"Favourite Person", "content":"Steve jobs", "id":5}]
+
+def find_post(id):
+    for p in my_posts:
+        if p['id'] == id:
+            return p
 
 @app.get("/")
 def root():
@@ -44,3 +49,10 @@ def demopost(new_post: Post):
     my_posts.append(post_dict)
     return {"data":post_dict}
 
+@app.get("/posts/{id}")
+def get_post(id: int, response: Response):
+    post = find_post(id)
+    if not post:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"post with id: {id} was not found")
+    return {"post_details": post}
